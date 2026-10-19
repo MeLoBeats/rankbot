@@ -1,0 +1,16 @@
+{
+  "name": "rankbot",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node --env-file=.env bot.js",
+    "auth": "node --env-file=.env scripts/auth.js"
+  },
+  "dependencies": {
+    "ws": "^8.22.0"
+  }
+}

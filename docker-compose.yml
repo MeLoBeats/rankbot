@@ -1,0 +1,8 @@
+services:
+  rankbot:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      # Holds tokens.json, which the bot rewrites on every token refresh
+      - ./data:/data
