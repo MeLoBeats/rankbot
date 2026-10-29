@@ -4,5 +4,9 @@ services:
     restart: unless-stopped
     env_file: .env
     volumes:
-      # Holds tokens.json, which the bot rewrites on every token refresh
-      - ./data:/data
+      # Holds tokens.json, which the bot rewrites on every token refresh.
+      # A named volume lives outside the project folder, so deploys never overwrite it.
+      - rankbot-data:/data
+
+volumes:
+  rankbot-data:

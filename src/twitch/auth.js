@@ -45,10 +45,20 @@ export function refreshTokens() {
 }
 
 async function loadTokens() {
+	let raw;
 	try {
-		tokens = JSON.parse(await readFile(TOKENS_PATH, 'utf8'));
+		raw = await readFile(TOKENS_PATH, 'utf8');
+		tokens = JSON.parse(raw);
 	} catch {
 		throw new Error('No tokens found. Run `npm run auth` first.');
+	}
+
+	// Twitch invalidates the old refresh token as soon as it issues a new one, so a refresh
+	// whose result cannot be saved would lock the bot out. Fail fast if the file is read-only.
+	try {
+		await writeFile(TOKENS_PATH, raw);
+	} catch (err) {
+		throw new Error(`Cannot write ${TOKENS_PATH}: ${err.message}. Fix the permissions before starting.`);
 	}
 	scheduleRefresh();
 }
